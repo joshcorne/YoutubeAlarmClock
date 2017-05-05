@@ -41,10 +41,19 @@ public class MainActivity extends AppCompatActivity
 
         setTitle("Youtube Alarm Clock");
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor edit = sp.edit();
+
         TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
         Switch statusSwitch = (Switch) findViewById(R.id.switch1);
         TextView videoTitle = (TextView) findViewById(R.id.textView4);
         String video = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+        //Get alarm deets
+        int hour = PreferenceManager.getDefaultSharedPreferences(this).getInt("hour", 0);
+        int minute = PreferenceManager.getDefaultSharedPreferences(this).getInt("minute", 0);
+        boolean status = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("status", false);
+        String videoDetails = PreferenceManager.getDefaultSharedPreferences(this).getString("video", "No video selected.");
 
         //Create
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -53,13 +62,8 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(MainActivity.this, AlarmReceiver.class);
             intent.putExtra(VIDEO_TAG, video);
             pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+            edit.putString("video", video);
         }
-
-        //Get alarm deets
-        int hour = PreferenceManager.getDefaultSharedPreferences(this).getInt("hour", 0);
-        int minute = PreferenceManager.getDefaultSharedPreferences(this).getInt("minute", 0);
-        boolean status = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("status", false);
-        String videoDetails = PreferenceManager.getDefaultSharedPreferences(this).getString("video", video);
 
         //Set up GUI
         statusSwitch.setChecked(status);
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+        edit.apply();
     }
 
     @Override
