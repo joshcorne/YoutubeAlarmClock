@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">OnlineAlarmClock</string>
+    <string name="app_name">YouTube Alarm Clock</string>
     <string name="action_settings">Settings</string>
+    <string name="no_video">No video selected.</string>
+    <string name="alarm_status">Alarm Status</string>
+    <string name="no_video_set_toast">You haven\'t set a video.</string>
+    <string name="title">YouTube Alarm Clock</string>
 </resources>
